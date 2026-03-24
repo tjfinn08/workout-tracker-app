@@ -1,2 +1,13 @@
-# workout-tracker-app
-This is going to be a personal project, where I am making an app that will allow me to track my workouts and progress for each lift.
+# Workout-Tracker-App
+
+An application for tracking workouts, exercises and progress over time.
+
+## Features (Planned)
+- Track workouts by date
+- Select muscle groups for a day (chest, back, etc)
+- Under each muscle group, track which exercises you are doing
+- Record individual sets, reps, and weight
+- Be able to view past performances for each exercise and workout group
+
+## Status
+In development
