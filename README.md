@@ -11,3 +11,6 @@ An application for tracking workouts, exercises and progress over time.
 
 ## Status
 In development
+
+## Idea
+- Muscle Groups -> Exercise -> Sets
