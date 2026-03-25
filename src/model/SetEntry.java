@@ -1,18 +1,12 @@
 package model;
 
 public class SetEntry {
-    private int numSets;
     private int numReps;
     private double weight;
 
-    public SetEntry(int aNumSets, int aNumReps, double aWeight){
-        numSets = aNumSets;
+    public SetEntry(int aNumReps, double aWeight){
         numReps = aNumReps;
         weight = aWeight;
-    }
-
-    public int getNumSets() {
-        return numSets;
     }
 
     public int getNumReps() {

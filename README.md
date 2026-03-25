@@ -14,3 +14,6 @@ In development
 
 ## Idea
 - Muscle Groups -> Exercise -> Sets
+
+## Current Step
+Making it so you can add a set to each individual must group, add set function for a linked list
