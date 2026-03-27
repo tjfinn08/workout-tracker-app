@@ -19,5 +19,11 @@ public class MuscleGroups {
         muscleExercises.add(anExercise);
     }
 
-    public void muscle
+    public String toString() {
+        String muscle_string = muscle + "\n";
+
+
+
+        return muscle_string;
+    }
 }
