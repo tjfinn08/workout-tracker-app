@@ -8,9 +8,10 @@ public class Exercise {
     private String exerciseName;
     private LinkedList<SetEntry> exerciseSets;
 
-    public Exercise(String aMuscleGroup, String aExerciseName){
+    public Exercise(String aMuscleGroup, String anExerciseName){
         muscleGroup = aMuscleGroup;
-        exerciseName = aExerciseName;
+        exerciseName = anExerciseName;
+        exerciseSets = new LinkedList<>();
     }
 
     public String getMuscleGroup() {
@@ -23,5 +24,12 @@ public class Exercise {
 
     public void addSet(SetEntry aSet){
         exerciseSets.add(aSet);
+    }
+
+    public String toString(){
+        String exercise_string = exerciseName;
+        for(int i = 0; i < exerciseSets.size(); i++){
+            System.out.println(i+1 + ": " + exerciseSets.get(i).getNumReps() + " x " + exerciseSets.get(i).getWeight());
+        }
     }
 }
