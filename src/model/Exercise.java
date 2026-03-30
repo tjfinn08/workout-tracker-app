@@ -28,7 +28,7 @@ public class Exercise {
 
     public String toString(){
         int setCount = 0;
-        String exercise_string = exerciseName + "\n";
+        String exercise_string = exerciseName + ":\n";
         for(int i = 0; i < exerciseSets.size(); i++){
             setCount+=1;
             exercise_string += setCount + ": " + exerciseSets.get(i).getNumReps() + " x " + exerciseSets.get(i).getWeight();
