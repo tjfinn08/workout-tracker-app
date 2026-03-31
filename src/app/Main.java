@@ -9,16 +9,23 @@ public class Main {
         System.out.println("Workout Tracker App started\n");
 
         MuscleGroups chest = new MuscleGroups("Chest");
+        MuscleGroups back = new MuscleGroups("Back");
+        MuscleGroups biceps = new MuscleGroups("biceps");
 
-        Exercise exercise1 = new Exercise("Chest", "Barbell Bench");
-        exercise1.addSet(new SetEntry(8, 225));
-        exercise1.addSet(new SetEntry(8, 225));
-        Exercise exercise2 = new Exercise("Chest", "Incline Smith Bench");
-        exercise2.addSet(new SetEntry(12, 185));
+        Exercise barbellBench = new Exercise("Chest", "Barbell Bench");
+        barbellBench.addSet(new SetEntry(8, 225));
+        barbellBench.addSet(new SetEntry(8, 225));
+        Exercise inclineSmithBench = new Exercise("Chest", "Incline Smith Bench");
+        inclineSmithBench.addSet(new SetEntry(12, 185));
+        Exercise latPulldown = new Exercise("Back", "Lat Pulldown");
 
-        chest.addExercise(exercise1);
-        chest.addExercise(exercise2);
+        chest.determineMuscleGroup(barbellBench);
+        chest.determineMuscleGroup(inclineSmithBench);
+        chest.determineMuscleGroup(latPulldown);
 
-        System.out.println(chest.toString());
+        back.determineMuscleGroup(latPulldown);
+
+        System.out.println(chest);
+        System.out.println(back);
     }
 }

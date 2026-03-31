@@ -9,6 +9,19 @@ public class SetEntry {
         weight = aWeight;
     }
 
+    public SetEntry(){
+        numReps = 0;
+        weight = 0;
+    }
+
+    public void setNumReps(int aNumReps) {
+        this.numReps = aNumReps;
+    }
+
+    public void setWeight(double aWeight) {
+        this.weight = aWeight;
+    }
+
     public int getNumReps() {
         return numReps;
     }

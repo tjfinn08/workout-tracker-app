@@ -19,6 +19,12 @@ public class MuscleGroups {
         muscleExercises.add(anExercise);
     }
 
+    public void determineMuscleGroup(Exercise e){
+        if(e.getMuscleGroup() == muscle){
+            addExercise(e);
+        }
+    }
+
     public String toString() {
         String muscle_string = muscle + ":\n";
         for(int i = 0; i < muscleExercises.size(); i++) {
