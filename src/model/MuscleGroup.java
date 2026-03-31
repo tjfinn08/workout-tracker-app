@@ -2,11 +2,11 @@ package model;
 
 import java.util.LinkedList;
 
-public class MuscleGroups {
+public class MuscleGroup {
     private String muscle;
     private LinkedList<Exercise> muscleExercises;
 
-    public MuscleGroups(String aMuscle){
+    public MuscleGroup(String aMuscle){
         muscle = aMuscle;
         muscleExercises = new LinkedList<>();
     }
@@ -15,12 +15,16 @@ public class MuscleGroups {
         return muscle;
     }
 
+    public LinkedList<Exercise> getMuscleExercises() {
+        return muscleExercises;
+    }
+
     public void addExercise(Exercise anExercise){
         muscleExercises.add(anExercise);
     }
 
     public void determineMuscleGroup(Exercise e){
-        if(e.getMuscleGroup() == muscle){
+        if((e.getMuscleGroup().equals(muscle))){
             addExercise(e);
         }
     }

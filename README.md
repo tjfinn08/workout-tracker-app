@@ -16,4 +16,4 @@ In development
 - Muscle Groups -> Exercise -> Sets
 
 ## Current Step
-Making it so you can add a set to each individual must group, add set function for a linked list
+Now working on workout manager, and ability to search and find each individual exercise and it's progress

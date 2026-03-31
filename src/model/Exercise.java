@@ -1,6 +1,8 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class Exercise {
 
@@ -20,6 +22,10 @@ public class Exercise {
 
     public String getExerciseName() {
         return exerciseName;
+    }
+
+    public LinkedList<SetEntry> getExerciseSets() {
+        return exerciseSets;
     }
 
     public void addSet(SetEntry aSet){
