@@ -29,7 +29,7 @@ public class WorkoutManager {
             for(MuscleGroup currMuscle : currDay.getMuscleGroups()) {
                 for(Exercise currExercise : currMuscle.getMuscleExercises()) {
                     if(currExercise.getExerciseName().equalsIgnoreCase(anExerciseName)) {
-                        if(recentDate == null || currDay.getDate().isAfter(recentDate)){
+                        if(recentDate == null || currDay.getDate().isAfter(recentDate)) {
                             recentDate = currDay.getDate();
                             recentExercise = currExercise;
                         }
