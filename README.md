@@ -16,4 +16,6 @@ In development
 - Muscle Groups -> Exercise -> Sets
 
 ## Current Step
-Now working on workout manager, and ability to search and find each individual exercise and it's progress
+Now working on workout manager, and ability to search and find each individual exercise, and it's progress.
+Have the ability to find it now, but the run time is terrible, O(n^3), need to figure out another way to find this
+eventually.
