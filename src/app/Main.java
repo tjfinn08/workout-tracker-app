@@ -5,10 +5,23 @@ import model.MuscleGroup;
 import model.SetEntry;
 import model.WorkoutDay;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
         System.out.println("Workout Tracker App started\n");
 
+        boolean run = true;
+        while(run) {
+            System.out.print("Add Muscle Group: ");
+            String currMuscleGroup = input.nextLine();
+            MuscleGroup curr = new MuscleGroup(currMuscleGroup);
+            
+        }
+
+        /*
         MuscleGroup chest = new MuscleGroup("Chest");
         MuscleGroup back = new MuscleGroup("Back");
         MuscleGroup biceps = new MuscleGroup("biceps");
@@ -35,6 +48,7 @@ public class Main {
         today.addMuscleGroup(back);
 
         System.out.print(today);
+         */
 
         System.out.println("END");
     }
