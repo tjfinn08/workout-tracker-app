@@ -4,39 +4,24 @@ import model.Exercise;
 import model.MuscleGroup;
 import model.WorkoutDay;
 
+import java.sql.Wrapper;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 public class WorkoutManager {
-    private LinkedList<WorkoutDay> workouts;
+    private HashMap<LocalDate, WorkoutDay> workoutDays;
 
     public WorkoutManager(){
-        workouts = new LinkedList<>();
+        workoutDays = new HashMap<>();
     }
 
-    public void addWorkoutDay(WorkoutDay aWorkout){
-        workouts.add(aWorkout);
-    }
-
-    public LinkedList<WorkoutDay> getWorkouts() {
-        return workouts;
-    }
-
-    public Exercise findExerciseProgress(String anExerciseName) {
-        Exercise recentExercise = null;
-        LocalDate recentDate = null;
-        for(WorkoutDay currDay : workouts){
-            for(MuscleGroup currMuscle : currDay.getMuscleGroups()) {
-                for(Exercise currExercise : currMuscle.getMuscleExercises()) {
-                    if(currExercise.getExerciseName().equalsIgnoreCase(anExerciseName)) {
-                        if(recentDate == null || currDay.getDate().isAfter(recentDate)) {
-                            recentDate = currDay.getDate();
-                            recentExercise = currExercise;
-                        }
-                    }
-                }
-            }
+    public WorkoutDay getWorkoutDay(LocalDate aDate) {
+        if(!workoutDays.containsKey(aDate)) {
+            WorkoutDay day = new WorkoutDay(aDate);
+            workoutDays.put(aDate, day);
         }
-        return recentExercise;
+
+        return workoutDays.get(aDate);
     }
 }

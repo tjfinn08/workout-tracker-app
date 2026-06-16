@@ -1,10 +1,12 @@
 package app;
 
+import logic.WorkoutManager;
 import model.Exercise;
 import model.MuscleGroup;
 import model.SetEntry;
 import model.WorkoutDay;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -13,42 +15,65 @@ public class Main {
 
         System.out.println("Workout Tracker App started\n");
 
-        boolean run = true;
-        while(run) {
-            System.out.print("Add Muscle Group: ");
-            String currMuscleGroup = input.nextLine();
-            MuscleGroup curr = new MuscleGroup(currMuscleGroup);
-            
+
+
+        WorkoutManager manager = new WorkoutManager();
+
+        System.out.print("Would you like to use today's date? (Yes/No): ");
+        String userInput = input.nextLine();
+
+        LocalDate date;
+
+        if(userInput.equals("No")) {
+            System.out.print("Select a date (Must be in YYYY-MM-DD format): ");
+            String dateString = input.nextLine();
+            date = LocalDate.parse(dateString);
+        }
+        else {
+            date = LocalDate.now();
         }
 
-        /*
-        MuscleGroup chest = new MuscleGroup("Chest");
-        MuscleGroup back = new MuscleGroup("Back");
-        MuscleGroup biceps = new MuscleGroup("biceps");
-        MuscleGroup chest2 = new MuscleGroup("Chest");
+        WorkoutDay userDay = manager.getWorkoutDay(date);
 
-        Exercise barbellBench = new Exercise("Chest", "Barbell Bench");
-        barbellBench.addSet(new SetEntry(8, 225));
-        barbellBench.addSet(new SetEntry(8, 225));
-        Exercise inclineSmithBench = new Exercise("Chest", "Incline Smith Bench");
-        inclineSmithBench.addSet(new SetEntry(12, 185));
-        Exercise latPulldown = new Exercise("Back", "Lat Pulldown");
-        latPulldown.addSet(new SetEntry(12, 250));
+        System.out.print("What muscle group are you hitting today? ");
 
-        chest.determineMuscleGroup(barbellBench);
-        chest.determineMuscleGroup(inclineSmithBench);
-        chest.determineMuscleGroup(latPulldown);
-        back.determineMuscleGroup(latPulldown);
-        chest2.determineMuscleGroup(barbellBench);
+        String userMuscleGroup = input.nextLine();
 
-        WorkoutDay today = new WorkoutDay();
+        MuscleGroup currMuscleGroup = new MuscleGroup(userMuscleGroup);
 
-        today.addMuscleGroup(chest);
-        today.addMuscleGroup(chest2);
-        today.addMuscleGroup(back);
+        while(true) {
+            System.out.print("Would you like to add an exercise? (Yes/No): ");
+            userInput = input.nextLine();
+            if(userInput.equals("No")) {
+                break;
+            }
 
-        System.out.print(today);
-         */
+            System.out.print("What exercise do you want to do? ");
+            String userExercise = input.nextLine();
+            Exercise currExercise = new Exercise(userExercise);
+
+            while(true) {
+                System.out.print("Would you like to add a set? (Yes/No): ");
+                userInput = input.nextLine();
+                if(userInput.equals("No")) {
+                    break;
+                }
+                SetEntry currSet = new SetEntry();
+                System.out.print("How many reps did you do? ");
+                int numReps = input.nextInt();
+                System.out.print("What was the weight? ");
+                double weight = input.nextDouble();
+                currSet.setNumReps(numReps);
+                currSet.setWeight(weight);
+                currExercise.addSet(currSet);
+                input.nextLine();
+            }
+            currMuscleGroup.addExercise(currExercise);
+        }
+
+        userDay.addMuscleGroup(currMuscleGroup);
+
+        System.out.print(userDay);
 
         System.out.println("END");
     }

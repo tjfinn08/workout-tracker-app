@@ -6,18 +6,12 @@ import java.util.Locale;
 
 public class Exercise {
 
-    private String muscleGroup;
     private String exerciseName;
     private LinkedList<SetEntry> exerciseSets;
 
-    public Exercise(String aMuscleGroup, String anExerciseName){
-        muscleGroup = aMuscleGroup;
+    public Exercise(String anExerciseName){
         exerciseName = anExerciseName;
         exerciseSets = new LinkedList<>();
-    }
-
-    public String getMuscleGroup() {
-        return muscleGroup;
     }
 
     public String getExerciseName() {
