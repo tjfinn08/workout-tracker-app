@@ -11,12 +11,23 @@ import model.MuscleGroup;
 
 public class WorkoutAppFX extends Application {
 
+    // Model
     private MuscleGroup muscle;
     private Exercise currExercise;
 
-    @Override
-    public void start(Stage stage) {
+    // Scenes
+    private Scene workoutScene;
+    private Scene muscleGroupScene;
+    private Scene exerciseScene;
 
+    // Controls
+    private Label currMuscle;
+    private Label currExerciseName;
+
+    ListView<Exercise> exerciseList = new ListView<>();
+
+
+    private Scene createWorkoutScene(Stage stage) {
         // WorkoutScene Breakdown
         VBox workoutLayout = new VBox(10);
 
@@ -43,8 +54,27 @@ public class WorkoutAppFX extends Application {
         workoutLayout.setAlignment(Pos.TOP_LEFT);
         workoutLayout.setPadding(new Insets(20));
 
-        Scene workoutScene = new Scene(workoutLayout, 300, 250);
+        // WorkoutScene Button action
+        addMuscleGroup.setOnAction(addMuscleGroupButton -> {
+            muscleGroupField.setVisible(true);
+            startWorkout.setVisible(true);
+        });
 
+        startWorkout.setOnAction(startWorkoutButton -> {
+            String muscleName = muscleGroupField.getText().trim();
+            if(!muscleName.isEmpty()) {
+                muscle = new MuscleGroup(muscleName);
+                currMuscle.setText(muscle.getMuscle());
+            }
+            muscleGroupScene = createMuscleGroupuScene(stage);
+            stage.setScene(muscleGroupScene);
+        });
+
+        workoutScene = new Scene(workoutLayout, 300, 250);
+        return workoutScene;
+    }
+
+    private Scene createMuscleGroupuScene(Stage stage) {
         // MuscleGroupScene Breakdown
         VBox muscleGroupLayout = new VBox(10);
         HBox backArrowMuscleGroup = new HBox(10);
@@ -52,23 +82,14 @@ public class WorkoutAppFX extends Application {
         // MuscleGroupScene Control Breakdown
         TextField newExerciseField = new TextField();
         newExerciseField.setPromptText("Enter Exercise");
-        newExerciseField.setVisible(true);
 
         Button addExercise = new Button("Add Exercise");
-        addExercise.setVisible(true);
 
         Label exerciseLabel = new Label("Exercises: ");
-        exerciseLabel.setVisible(true);
-
-        ListView<Exercise> exerciseList = new ListView<>();
-        exerciseList.setVisible(true);
 
         Button backToWorkoutScene = new Button("<-");
 
-        Label currMuscle = new Label("");
-
         // MuscleGroupScene Layout
-
         backArrowMuscleGroup.getChildren().addAll(
                 backToWorkoutScene,
                 currMuscle
@@ -85,26 +106,6 @@ public class WorkoutAppFX extends Application {
         muscleGroupLayout.setAlignment(Pos.TOP_LEFT);
         muscleGroupLayout.setPadding(new Insets(20));
 
-        Scene muscleGroupScene = new Scene(muscleGroupLayout, 300, 250);
-
-        // Button Breakdowns
-
-        // WorkoutScene Button action
-        addMuscleGroup.setOnAction(addMuscleGroupButton -> {
-            muscleGroupField.setVisible(true);
-            startWorkout.setVisible(true);
-        });
-
-        startWorkout.setOnAction(startWorkoutButton -> {
-            String muscleName = muscleGroupField.getText().trim();
-            if(!muscleName.isEmpty()) {
-                muscle = new MuscleGroup(muscleName);
-                currMuscle.setText(muscle.getMuscle());
-            }
-            stage.setScene(muscleGroupScene);
-        });
-
-        // MuscleGroupScene Button action
         addExercise.setOnAction(addExerciseButton -> {
             String exerciseName = newExerciseField.getText().trim();
             if(!exerciseName.isEmpty()) {
@@ -115,36 +116,78 @@ public class WorkoutAppFX extends Application {
             }
         });
 
-        exerciseList.getSelectionModel().selectedItemProperty()
-                .addListener((obs, oldVal, newVal) -> {
-                    if(newVal != null) {
-                        VBox exerciseLayout = new VBox(10);
-                        HBox backArrowExercise = new HBox(10);
-
-                        Label exerciseName = new Label(newVal.getExerciseName());
-                        Button backToMuscleGroupScene = new Button("<-");
-
-                        backArrowExercise.getChildren().addAll(
-                                backToMuscleGroupScene,
-                                exerciseName
-                        );
-
-                        exerciseLayout.getChildren().addAll(
-                                backArrowExercise
-                        );
-
-                        backToMuscleGroupScene.setOnAction(backButton -> {
-                            stage.setScene(muscleGroupScene);
-                        });
-
-                        Scene exerciseScene = new Scene(exerciseLayout, 300, 200);
-                        stage.setScene(exerciseScene);
-                    }
-                });
-
         backToWorkoutScene.setOnAction(backButton -> {
             stage.setScene(workoutScene);
         });
+
+
+        exerciseList.setOnMouseClicked(e -> {
+            Exercise selected = exerciseList.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                return;
+            }
+            currExercise = selected;
+            exerciseScene = createExerciseScene(stage);
+            stage.setScene(exerciseScene);
+        });
+
+        muscleGroupScene = new Scene(muscleGroupLayout, 300, 250);
+        return muscleGroupScene;
+    }
+
+    private Scene createExerciseScene(Stage stage) {
+        VBox exerciseLayout = new VBox(10);
+        HBox backArrowExercise = new HBox(10);
+
+        currExerciseName.setText(currExercise.getExerciseName());
+        Button backToMuscleGroupScene = new Button("<-");
+
+        backArrowExercise.getChildren().addAll(
+                backToMuscleGroupScene,
+                currExerciseName
+        );
+
+        Button addSet = new Button("+");
+
+        addSet.setOnAction(addNewSet -> {
+            HBox repsAndWeight = new HBox(10);
+            TextField repsTextField = new TextField();
+            repsTextField.setPromptText("Reps");
+            repsTextField.setMaxWidth(75);
+
+            TextField weightTextField = new TextField();
+            weightTextField.setPromptText("Weight");
+            weightTextField.setMaxWidth(75);
+
+            repsAndWeight.getChildren().addAll(
+                    repsTextField,
+                    new Label("X"),
+                    weightTextField
+            );
+
+            exerciseLayout.getChildren().add(repsAndWeight);
+        });
+
+        exerciseLayout.getChildren().addAll(
+                backArrowExercise,
+                addSet
+        );
+
+        backToMuscleGroupScene.setOnAction(backButton -> {
+            stage.setScene(muscleGroupScene);
+        });
+
+        exerciseScene = new Scene(exerciseLayout, 300, 200);
+        return exerciseScene;
+    }
+
+    @Override
+    public void start(Stage stage) {
+        currMuscle = new Label();
+        currExerciseName = new Label();
+        exerciseList = new ListView<>();
+
+        Scene workoutScene = createWorkoutScene(stage);
 
         stage.setTitle("Workout Tracker App");
         stage.setScene(workoutScene);
