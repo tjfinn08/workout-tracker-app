@@ -15,4 +15,4 @@ In development
 - Muscle Groups -> Exercise -> Sets
 
 ## Current Step
-Working on saving and loading files in order to be able to reuse information
+Working on UI, currently on portion with sets, reps and weight

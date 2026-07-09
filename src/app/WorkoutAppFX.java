@@ -165,8 +165,23 @@ public class WorkoutAppFX extends Application {
                     weightTextField
             );
 
-            exerciseLayout.getChildren().add(repsAndWeight);
+            HBox repsWeightText = new HBox(10);
+            repsWeightText.getChildren().addAll(
+                    new Label("Reps"),
+                    new Label ("                      "),
+                    new Label("Weight")
+            );
+
+            exerciseLayout.getChildren().addAll(
+                    new Label("------------------------------"),
+                    repsWeightText,
+                    repsAndWeight,
+                    new Label("------------------------------")
+            );
         });
+
+        exerciseLayout.setAlignment(Pos.TOP_LEFT);
+        exerciseLayout.setPadding(new Insets(20));
 
         exerciseLayout.getChildren().addAll(
                 backArrowExercise,
