@@ -29,4 +29,12 @@ public class Exercise {
     public String toString(){
         return exerciseName;
     }
+
+    public String exerciseSets() {
+        StringBuilder setString = new StringBuilder();
+        for(SetEntry s : exerciseSets) {
+            setString.append(s).append("\n");
+        }
+        return setString.toString();
+    }
 }

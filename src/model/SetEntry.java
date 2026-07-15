@@ -29,4 +29,8 @@ public class SetEntry {
     public double getWeight() {
         return weight;
     }
+
+    public String toString() {
+        return numReps + "     X     " + weight;
+    }
 }
