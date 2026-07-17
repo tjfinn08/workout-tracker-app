@@ -24,10 +24,6 @@ public class MuscleGroup {
     }
 
     public String toString() {
-        String muscle_string = muscle + ":\n";
-        for(int i = 0; i < muscleExercises.size(); i++) {
-            muscle_string += muscleExercises.get(i).toString();
-        }
-        return muscle_string;
+        return muscle;
     }
 }

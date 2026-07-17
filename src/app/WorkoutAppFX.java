@@ -14,7 +14,7 @@ import model.SetEntry;
 public class WorkoutAppFX extends Application {
 
     // Model
-    private MuscleGroup muscle;
+    private MuscleGroup currMuscleGroup;
     private Exercise currExercise;
 
     // Scenes
@@ -23,10 +23,11 @@ public class WorkoutAppFX extends Application {
     private Scene exerciseScene;
 
     // Controls
-    private Label currMuscle;
-    private Label currExerciseName;
+    private Label currMuscleLabel;
+    private Label currExerciseNameLabel;
 
-    ListView<Exercise> exerciseList = new ListView<>();
+    ListView<MuscleGroup> muscleGroupListView = new ListView<>();
+    ListView<Exercise> exerciseListView = new ListView<>();
     private VBox setRows;
 
     private Scene createWorkoutScene(Stage stage) {
@@ -36,39 +37,55 @@ public class WorkoutAppFX extends Application {
         // WorkoutScene Control Breakdown
         Label workoutLabel = new Label("Workout Tracker");
 
-        Button addMuscleGroup = new Button("+");
+        Button startWorkout = new Button("Start Workout");
 
         TextField muscleGroupField = new TextField();
         muscleGroupField.setPromptText("Enter Workout");
         muscleGroupField.setVisible(false);
 
-        Button startWorkout = new Button("Start Workout");
-        startWorkout.setVisible(false);
+        Button addMuscleGroup = new Button("Add Muscle Group");
+        addMuscleGroup.setVisible(false);
+
+        muscleGroupListView.setVisible(false);
 
         // WorkoutScene Layout
         workoutLayout.getChildren().addAll(
                 workoutLabel,
-                addMuscleGroup,
+                startWorkout,
                 muscleGroupField,
-                startWorkout
+                addMuscleGroup,
+                muscleGroupListView
         );
 
         workoutLayout.setAlignment(Pos.TOP_LEFT);
         workoutLayout.setPadding(new Insets(20));
 
         // WorkoutScene Button action
-        addMuscleGroup.setOnAction(addMuscleGroupButton -> {
+        startWorkout.setOnAction(addMuscleGroupButton -> {
             muscleGroupField.setVisible(true);
-            startWorkout.setVisible(true);
+            addMuscleGroup.setVisible(true);
         });
 
-        startWorkout.setOnAction(startWorkoutButton -> {
+        addMuscleGroup.setOnAction(startWorkoutButton -> {
             String muscleName = muscleGroupField.getText().trim();
             if(!muscleName.isEmpty()) {
-                muscle = new MuscleGroup(muscleName);
-                currMuscle.setText(muscle.getMuscle());
+                currMuscleGroup = new MuscleGroup(muscleName);
+                //currMuscleGroup.addExercise(exercise); day will go here
+                muscleGroupListView.setVisible(true);
+                muscleGroupListView.getItems().add(currMuscleGroup);
+                muscleGroupField.clear();
             }
-            muscleGroupScene = createMuscleGroupuScene(stage);
+        });
+
+        muscleGroupListView.setOnMouseClicked(e -> {
+            MuscleGroup selected = muscleGroupListView.getSelectionModel().getSelectedItem();
+            if (selected == null) {
+                return;
+            }
+            currMuscleGroup = selected;
+            currMuscleLabel.setText(currMuscleGroup.getMuscle());
+            muscleGroupScene = createMuscleGroupScene(stage);
+            refreshExerciseList();
             stage.setScene(muscleGroupScene);
         });
 
@@ -76,7 +93,7 @@ public class WorkoutAppFX extends Application {
         return workoutScene;
     }
 
-    private Scene createMuscleGroupuScene(Stage stage) {
+    private Scene createMuscleGroupScene(Stage stage) {
         // MuscleGroupScene Breakdown
         VBox muscleGroupLayout = new VBox(10);
         HBox backArrowMuscleGroup = new HBox(10);
@@ -94,7 +111,7 @@ public class WorkoutAppFX extends Application {
         // MuscleGroupScene Layout
         backArrowMuscleGroup.getChildren().addAll(
                 backToWorkoutScene,
-                currMuscle
+                currMuscleLabel
         );
 
         muscleGroupLayout.getChildren().addAll(
@@ -102,7 +119,7 @@ public class WorkoutAppFX extends Application {
                 newExerciseField,
                 addExercise,
                 exerciseLabel,
-                exerciseList
+                exerciseListView
         );
 
         muscleGroupLayout.setAlignment(Pos.TOP_LEFT);
@@ -112,8 +129,8 @@ public class WorkoutAppFX extends Application {
             String exerciseName = newExerciseField.getText().trim();
             if(!exerciseName.isEmpty()) {
                 Exercise exercise = new Exercise(exerciseName);
-                muscle.addExercise(exercise);
-                exerciseList.getItems().add(exercise);
+                currMuscleGroup.addExercise(exercise);
+                refreshExerciseList();
                 newExerciseField.clear();
             }
         });
@@ -123,8 +140,8 @@ public class WorkoutAppFX extends Application {
         });
 
 
-        exerciseList.setOnMouseClicked(e -> {
-            Exercise selected = exerciseList.getSelectionModel().getSelectedItem();
+        exerciseListView.setOnMouseClicked(e -> {
+            Exercise selected = exerciseListView.getSelectionModel().getSelectedItem();
             if (selected == null) {
                 return;
             }
@@ -142,12 +159,12 @@ public class WorkoutAppFX extends Application {
         setRows = new VBox(10);
         HBox backArrowExercise = new HBox(10);
 
-        currExerciseName.setText(currExercise.getExerciseName());
+        currExerciseNameLabel.setText(currExercise.getExerciseName());
         Button backToMuscleGroupScene = new Button("<-");
 
         backArrowExercise.getChildren().addAll(
                 backToMuscleGroupScene,
-                currExerciseName
+                currExerciseNameLabel
         );
 
         VBox savedSetsToday = new VBox(10);
@@ -249,11 +266,17 @@ public class WorkoutAppFX extends Application {
         return row;
     }
 
+    private void refreshExerciseList() {
+        exerciseListView.getItems().clear();
+
+        exerciseListView.getItems().addAll(currMuscleGroup.getMuscleExercises());
+    }
+
     @Override
     public void start(Stage stage) {
-        currMuscle = new Label();
-        currExerciseName = new Label();
-        exerciseList = new ListView<>();
+        currMuscleLabel = new Label();
+        currExerciseNameLabel = new Label();
+        exerciseListView = new ListView<>();
 
         Scene workoutScene = createWorkoutScene(stage);
 
