@@ -1,0 +1,45 @@
+.button {
+    -fx-background-radius: 12;
+    -fx-font-size: 14px;
+    -fx-background-color: "skyblue";
+}
+
+.text-field {
+    -fx-background-radius: 12;
+}
+
+.label {
+    -fx-font-family: "Avenir Next";
+    -fx-text-fill: "white";
+}
+
+.heading {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: "darkblue";
+    -fx-font-family: "Times New Roman"
+}
+
+.title {
+    -fx-font-size: 38px;
+    -fx-font-weight: bold;
+    -fx-text-fill: "navy";
+    -fx-font-family: "Times New Roman";
+}
+
+.list-view {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.list-cell {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.list-cell:selected {
+    -fx-background-color: "cornflowerblue";
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-text-fill: white;
+}

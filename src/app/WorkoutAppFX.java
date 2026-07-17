@@ -10,6 +10,7 @@ import javafx.geometry.*;
 import model.Exercise;
 import model.MuscleGroup;
 import model.SetEntry;
+import java.util.Objects;
 
 public class WorkoutAppFX extends Application {
 
@@ -29,13 +30,16 @@ public class WorkoutAppFX extends Application {
     ListView<MuscleGroup> muscleGroupListView = new ListView<>();
     ListView<Exercise> exerciseListView = new ListView<>();
     private VBox setRows;
+    private VBox savedSetsToday;
 
     private Scene createWorkoutScene(Stage stage) {
         // WorkoutScene Breakdown
         VBox workoutLayout = new VBox(10);
+        workoutLayout.setStyle("-fx-background-color: darkgray;");
 
         // WorkoutScene Control Breakdown
         Label workoutLabel = new Label("Workout Tracker");
+        workoutLabel.getStyleClass().add("title");
 
         Button startWorkout = new Button("Start Workout");
 
@@ -89,13 +93,17 @@ public class WorkoutAppFX extends Application {
             stage.setScene(muscleGroupScene);
         });
 
-        workoutScene = new Scene(workoutLayout, 800, 800);
+        workoutScene = new Scene(workoutLayout, 600, 600);
+        workoutScene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
+        );
         return workoutScene;
     }
 
     private Scene createMuscleGroupScene(Stage stage) {
         // MuscleGroupScene Breakdown
         VBox muscleGroupLayout = new VBox(10);
+        muscleGroupLayout.setStyle("-fx-background-color: darkgray;");
         HBox backArrowMuscleGroup = new HBox(10);
 
         // MuscleGroupScene Control Breakdown
@@ -107,6 +115,8 @@ public class WorkoutAppFX extends Application {
         Label exerciseLabel = new Label("Exercises: ");
 
         Button backToWorkoutScene = new Button("<-");
+
+        currMuscleLabel.getStyleClass().add("heading");
 
         // MuscleGroupScene Layout
         backArrowMuscleGroup.getChildren().addAll(
@@ -150,24 +160,30 @@ public class WorkoutAppFX extends Application {
             stage.setScene(exerciseScene);
         });
 
-        muscleGroupScene = new Scene(muscleGroupLayout, 800, 800);
+        muscleGroupScene = new Scene(muscleGroupLayout, 600, 600);
+        muscleGroupScene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
+        );
         return muscleGroupScene;
     }
 
     private Scene createExerciseScene(Stage stage) {
         VBox exerciseLayout = new VBox(10);
+        exerciseLayout.setStyle("-fx-background-color: darkgray;");
         setRows = new VBox(10);
         HBox backArrowExercise = new HBox(10);
 
         currExerciseNameLabel.setText(currExercise.getExerciseName());
         Button backToMuscleGroupScene = new Button("<-");
 
+        currExerciseNameLabel.getStyleClass().add("heading");
+
         backArrowExercise.getChildren().addAll(
                 backToMuscleGroupScene,
                 currExerciseNameLabel
         );
 
-        VBox savedSetsToday = new VBox(10);
+        savedSetsToday = new VBox(10);
 
         Label todaysSets = new Label();
 
@@ -217,7 +233,11 @@ public class WorkoutAppFX extends Application {
                 set.setWeight(Double.parseDouble(weightField.getText()));
 
                 currExercise.addSet(set);
+
+                refreshSetList();
             }
+            setRows.getChildren().clear();
+            setRows.getChildren().add(createSetRow());
         });
 
         exerciseLayout.setAlignment(Pos.TOP_LEFT);
@@ -236,7 +256,10 @@ public class WorkoutAppFX extends Application {
             stage.setScene(muscleGroupScene);
         });
 
-        exerciseScene = new Scene(exerciseLayout, 800, 800);
+        exerciseScene = new Scene(exerciseLayout, 600, 600);
+        exerciseScene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
+        );
         return exerciseScene;
     }
 
@@ -270,6 +293,16 @@ public class WorkoutAppFX extends Application {
         exerciseListView.getItems().clear();
 
         exerciseListView.getItems().addAll(currMuscleGroup.getMuscleExercises());
+    }
+
+    private void refreshSetList() {
+        savedSetsToday.getChildren().clear();
+        Label setLabel = new Label(currExercise.exerciseSets());
+        savedSetsToday.getChildren().addAll(
+                new Label("----------TODAY----------"),
+                setLabel,
+                new Label("----------------------------")
+        );
     }
 
     @Override
