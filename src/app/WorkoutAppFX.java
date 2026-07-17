@@ -10,6 +10,10 @@ import javafx.geometry.*;
 import model.Exercise;
 import model.MuscleGroup;
 import model.SetEntry;
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class WorkoutAppFX extends Application {
@@ -17,8 +21,10 @@ public class WorkoutAppFX extends Application {
     // Model
     private MuscleGroup currMuscleGroup;
     private Exercise currExercise;
+    private LocalDate currDate;
 
     // Scenes
+    private Scene calendarScene;
     private Scene workoutScene;
     private Scene muscleGroupScene;
     private Scene exerciseScene;
@@ -32,6 +38,34 @@ public class WorkoutAppFX extends Application {
     private VBox setRows;
     private VBox savedSetsToday;
 
+    private Scene createCalendarScene(Stage stage) {
+        VBox calendarLayout = new VBox(10);
+        calendarLayout.setStyle("-fx-background-color: darkgray;");
+
+        DatePicker workoutDate = new DatePicker(LocalDate.now());
+
+        Button startWorkout = new Button("Start Workout");
+
+        startWorkout.setOnAction(e-> {
+            currDate = workoutDate.getValue();
+            workoutScene = createWorkoutScene(stage);
+            stage.setScene(workoutScene);
+        });
+
+        calendarLayout.getChildren().addAll(
+                new Label("Workout Calendar"),
+                new Label("Select "),
+                workoutDate,
+                startWorkout
+        );
+
+        calendarScene = new Scene(calendarLayout, 600, 600);
+        calendarScene.getStylesheets().add(
+                Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
+        );
+        return calendarScene;
+    }
+
     private Scene createWorkoutScene(Stage stage) {
         // WorkoutScene Breakdown
         VBox workoutLayout = new VBox(10);
@@ -41,21 +75,20 @@ public class WorkoutAppFX extends Application {
         Label workoutLabel = new Label("Workout Tracker");
         workoutLabel.getStyleClass().add("title");
 
-        Button startWorkout = new Button("Start Workout");
-
         TextField muscleGroupField = new TextField();
         muscleGroupField.setPromptText("Enter Workout");
-        muscleGroupField.setVisible(false);
 
         Button addMuscleGroup = new Button("Add Muscle Group");
-        addMuscleGroup.setVisible(false);
 
-        muscleGroupListView.setVisible(false);
+        Button backToCalendarScene = new Button("<- Back To Calendar");
+
+        Label currDateLabel = new Label(currDate.toString());
 
         // WorkoutScene Layout
         workoutLayout.getChildren().addAll(
+                currDateLabel,
+                backToCalendarScene,
                 workoutLabel,
-                startWorkout,
                 muscleGroupField,
                 addMuscleGroup,
                 muscleGroupListView
@@ -65,11 +98,6 @@ public class WorkoutAppFX extends Application {
         workoutLayout.setPadding(new Insets(20));
 
         // WorkoutScene Button action
-        startWorkout.setOnAction(addMuscleGroupButton -> {
-            muscleGroupField.setVisible(true);
-            addMuscleGroup.setVisible(true);
-        });
-
         addMuscleGroup.setOnAction(startWorkoutButton -> {
             String muscleName = muscleGroupField.getText().trim();
             if(!muscleName.isEmpty()) {
@@ -91,6 +119,10 @@ public class WorkoutAppFX extends Application {
             muscleGroupScene = createMuscleGroupScene(stage);
             refreshExerciseList();
             stage.setScene(muscleGroupScene);
+        });
+
+        backToCalendarScene.setOnAction(backButton -> {
+            stage.setScene(calendarScene);
         });
 
         workoutScene = new Scene(workoutLayout, 600, 600);
@@ -171,6 +203,7 @@ public class WorkoutAppFX extends Application {
         VBox exerciseLayout = new VBox(10);
         exerciseLayout.setStyle("-fx-background-color: darkgray;");
         setRows = new VBox(10);
+        setRows.getChildren().add(createSetRow());
         HBox backArrowExercise = new HBox(10);
 
         currExerciseNameLabel.setText(currExercise.getExerciseName());
@@ -311,10 +344,10 @@ public class WorkoutAppFX extends Application {
         currExerciseNameLabel = new Label();
         exerciseListView = new ListView<>();
 
-        Scene workoutScene = createWorkoutScene(stage);
+        calendarScene = createCalendarScene(stage);
 
         stage.setTitle("Workout Tracker App");
-        stage.setScene(workoutScene);
+        stage.setScene(calendarScene);
         stage.show();
     }
 
