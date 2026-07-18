@@ -17,13 +17,20 @@
     -fx-font-size: 28px;
     -fx-font-weight: bold;
     -fx-text-fill: "darkblue";
-    -fx-font-family: "Times New Roman"
+    -fx-font-family: "Times New Roman";
 }
 
 .title {
     -fx-font-size: 38px;
     -fx-font-weight: bold;
     -fx-text-fill: "navy";
+    -fx-font-family: "Times New Roman";
+}
+
+.larger {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: "white";
     -fx-font-family: "Times New Roman";
 }
 

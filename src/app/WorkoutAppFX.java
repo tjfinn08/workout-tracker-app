@@ -7,13 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
+import logic.WorkoutManager;
 import model.Exercise;
 import model.MuscleGroup;
 import model.SetEntry;
+import model.WorkoutDay;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 public class WorkoutAppFX extends Application {
@@ -21,7 +21,8 @@ public class WorkoutAppFX extends Application {
     // Model
     private MuscleGroup currMuscleGroup;
     private Exercise currExercise;
-    private LocalDate currDate;
+    private WorkoutDay currDate;
+    private final WorkoutManager manager = new WorkoutManager();
 
     // Scenes
     private Scene calendarScene;
@@ -47,17 +48,27 @@ public class WorkoutAppFX extends Application {
         Button startWorkout = new Button("Start Workout");
 
         startWorkout.setOnAction(e-> {
-            currDate = workoutDate.getValue();
+            LocalDate date = workoutDate.getValue();
+            currDate = new WorkoutDay(date);
             workoutScene = createWorkoutScene(stage);
             stage.setScene(workoutScene);
         });
 
+        Label workoutCalendarLabel = new Label("Workout Calendar");
+        workoutCalendarLabel.getStyleClass().add("title");
+
+        Label askCalendar = new Label("Please select the date of your workout:");
+        askCalendar.getStyleClass().add("larger");
+
         calendarLayout.getChildren().addAll(
-                new Label("Workout Calendar"),
-                new Label("Select "),
+                workoutCalendarLabel,
+                askCalendar,
                 workoutDate,
                 startWorkout
         );
+
+        calendarLayout.setAlignment(Pos.TOP_LEFT);
+        calendarLayout.setPadding(new Insets(20));
 
         calendarScene = new Scene(calendarLayout, 600, 600);
         calendarScene.getStylesheets().add(
@@ -82,7 +93,9 @@ public class WorkoutAppFX extends Application {
 
         Button backToCalendarScene = new Button("<- Back To Calendar");
 
-        Label currDateLabel = new Label(currDate.toString());
+        Label currDateLabel = new Label(currDate.getDate().toString());
+
+        manager.getWorkoutDay(currDate.getDate());
 
         // WorkoutScene Layout
         workoutLayout.getChildren().addAll(
@@ -102,9 +115,10 @@ public class WorkoutAppFX extends Application {
             String muscleName = muscleGroupField.getText().trim();
             if(!muscleName.isEmpty()) {
                 currMuscleGroup = new MuscleGroup(muscleName);
-                //currMuscleGroup.addExercise(exercise); day will go here
+                currDate.addMuscleGroup(currMuscleGroup);
                 muscleGroupListView.setVisible(true);
-                muscleGroupListView.getItems().add(currMuscleGroup);
+                refreshMuscleGroupList();
+                //muscleGroupListView.getItems().add(currMuscleGroup);
                 muscleGroupField.clear();
             }
         });
@@ -320,6 +334,12 @@ public class WorkoutAppFX extends Application {
         );
 
         return row;
+    }
+
+    private void refreshMuscleGroupList() {
+        muscleGroupListView.getItems().clear();
+
+        muscleGroupListView.getItems().addAll(currDate.getMuscleGroups());
     }
 
     private void refreshExerciseList() {
