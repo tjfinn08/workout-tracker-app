@@ -107,6 +107,7 @@ public class WorkoutManager {
                 case "EXERCISE":
                     currExercise = new Exercise(parts[1]);
                     assert currMuscle != null;
+                    currMuscle.addExercise(currExercise);
                     addExercise(currDay.getDate(), currExercise);
                     break;
 
@@ -118,6 +119,6 @@ public class WorkoutManager {
                     currExercise.addSet(new SetEntry(reps, weight));
                     break;
             }
-            }
         }
     }
+}

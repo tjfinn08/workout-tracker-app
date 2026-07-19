@@ -1,0 +1,160 @@
+DAY|2026-07-15
+MUSCLE|Legs
+EXERCISE|Barbell Squat
+SET|10|255.0
+SET|10|255.0
+SET|8|255.0
+EXERCISE|Barbell RDLs
+SET|5|295.0
+SET|3|315.0
+EXERCISE|Seated Hamstring Curls
+SET|6|140.0
+SET|5|140.0
+EXERCISE|Unilateral Leg Extensions
+SET|9|115.0
+SET|0|115.0
+EXERCISE|Calf Raises
+SET|0|400.0
+SET|0|400.0
+MUSCLE|Abs
+EXERCISE|Sam Sulek Crunches
+SET|0|95.0
+SET|0|95.0
+DAY|2026-07-14
+MUSCLE|Back
+EXERCISE|Lat Pulldown
+SET|7|230.0
+SET|6|230.0
+SET|8|205.0
+EXERCISE|Incline Dumbbell Row
+SET|0|65.0
+SET|0|75.0
+SET|0|75.0
+EXERCISE|Seated Close Grip Cable Row
+SET|0|185.0
+SET|0|175.0
+SET|0|175.0
+EXERCISE|Machine Rear Delt Flys
+SET|8|145.0
+SET|6|160.0
+EXERCISE|Dumbbell Shrugs
+SET|0|75.0
+SET|0|75.0
+MUSCLE|Biceps
+EXERCISE|Alternating Dumbbell Curls
+SET|6|50.0
+SET|4|50.0
+SET|0|40.0
+EXERCISE|Dumbbell Hammer Curls
+SET|5|55.0
+SET|0|45.0
+MUSCLE|Abs
+EXERCISE|Sam Sulek Crunches
+SET|0|95.0
+SET|0|95.0
+SET|0|95.0
+MUSCLE|Forearms
+EXERCISE|Sam Sulek Forearms
+SET|0|85.0
+SET|0|85.0
+DAY|2026-07-13
+MUSCLE|Chest
+EXERCISE|Barbell Bench
+SET|4|225.0
+SET|3|225.0
+SET|1|235.0
+EXERCISE|Incline Smith Machine Bench
+SET|6|165.0
+SET|3|175.0
+SET|0|115.0
+EXERCISE|Pec Deck Flys
+SET|0|260.0
+SET|0|220.0
+MUSCLE|Triceps
+EXERCISE|Unilateral Pushdown
+SET|6|45.0
+SET|10|35.0
+SET|10|35.0
+EXERCISE|Unilateral Overhead Extensions
+SET|6|40.0
+SET|0|40.0
+MUSCLE|Shoulders
+EXERCISE|Dumbbell Shoulder Press
+SET|6|75.0
+SET|5|75.0
+EXERCISE|Dumbbell Lateral Raises
+SET|10|35.0
+SET|0|35.0
+SET|0|40.0
+MUSCLE|Abs
+EXERCISE|Sam Sulek Crunches
+SET|0|95.0
+SET|0|95.0
+SET|0|95.0
+MUSCLE|Forearms
+EXERCISE|Sam Sulek Forearms
+SET|0|85.0
+SET|0|85.0
+SET|0|85.0
+DAY|2026-07-18
+MUSCLE|Legs
+EXERCISE|Barbell Squat
+SET|3|290.0
+SET|5|270.0
+SET|5|270.0
+SET|4|270.0
+EXERCISE|Barbell RDLs
+SET|5|315.0
+EXERCISE|Abductors
+SET|0|155.0
+SET|0|155.0
+EXERCISE|Seated Hamstring Curls
+SET|7|140.0
+SET|7|140.0
+EXERCISE|Leg Extensions
+SET|10|247.0
+DAY|2026-07-17
+MUSCLE|Back
+EXERCISE|Lat Pulldown
+SET|6|230.0
+SET|5|230.0
+SET|10|205.0
+EXERCISE|Incline Dumbbell Row
+SET|10|75.0
+SET|10|75.0
+EXERCISE|Unilateral Seated Cable Row
+SET|10|75.0
+SET|0|80.0
+EXERCISE|Machine Rear Delt Flys
+SET|7|160.0
+SET|6|160.0
+EXERCISE|Dumbbell Shrugs
+SET|12|75.0
+SET|12|75.0
+MUSCLE|Biceps
+DAY|2026-07-16
+MUSCLE|Chest
+EXERCISE|Barbell Bench Press
+SET|1|245.0
+SET|3|225.0
+SET|2|225.0
+SET|10|185.0
+EXERCISE|Incline Barbell Bench
+SET|4|185.0
+SET|6|165.0
+MUSCLE|Shoulders
+EXERCISE|Dumbbell Shoulder Press
+SET|6|75.0
+SET|6|75.0
+MUSCLE|Triceps
+EXERCISE|Vbar Pushdown
+SET|8|95.0
+SET|6|95.0
+SET|50|45.0
+EXERCISE|Unilateral Overhead Extensions
+SET|6|45.0
+SET|6|45.0
+MUSCLE|Abs
+EXERCISE|Sam Sulek Crunches
+SET|0|95.0
+SET|0|95.0
