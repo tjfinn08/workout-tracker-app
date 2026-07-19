@@ -13,6 +13,7 @@ import model.MuscleGroup;
 import model.SetEntry;
 import model.WorkoutDay;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -49,9 +50,10 @@ public class WorkoutAppFX extends Application {
 
         startWorkout.setOnAction(e-> {
             LocalDate date = workoutDate.getValue();
-            currDate = new WorkoutDay(date);
+            currDate = manager.getWorkoutDay(date);
             workoutScene = createWorkoutScene(stage);
             stage.setScene(workoutScene);
+            refreshMuscleGroupList();
         });
 
         Label workoutCalendarLabel = new Label("Workout Calendar");
@@ -75,7 +77,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return calendarScene;
-    }
+    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
 
     private Scene createWorkoutScene(Stage stage) {
         // WorkoutScene Breakdown
@@ -94,8 +96,6 @@ public class WorkoutAppFX extends Application {
         Button backToCalendarScene = new Button("<- Back To Calendar");
 
         Label currDateLabel = new Label(currDate.getDate().toString());
-
-        manager.getWorkoutDay(currDate.getDate());
 
         // WorkoutScene Layout
         workoutLayout.getChildren().addAll(
@@ -118,7 +118,6 @@ public class WorkoutAppFX extends Application {
                 currDate.addMuscleGroup(currMuscleGroup);
                 muscleGroupListView.setVisible(true);
                 refreshMuscleGroupList();
-                //muscleGroupListView.getItems().add(currMuscleGroup);
                 muscleGroupField.clear();
             }
         });
@@ -144,7 +143,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return workoutScene;
-    }
+    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
 
     private Scene createMuscleGroupScene(Stage stage) {
         // MuscleGroupScene Breakdown
@@ -211,7 +210,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return muscleGroupScene;
-    }
+    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
 
     private Scene createExerciseScene(Stage stage) {
         VBox exerciseLayout = new VBox(10);
@@ -308,7 +307,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return exerciseScene;
-    }
+    } //only scene that still needs work, need to add "find most recent exercise" portion
 
     private HBox createSetRow() {
         HBox row = new HBox(10);
@@ -360,6 +359,11 @@ public class WorkoutAppFX extends Application {
 
     @Override
     public void start(Stage stage) {
+        try {
+            manager.loadFromFile("workouts.txt");
+        } catch (IOException e) {
+            System.out.println("No previous workouts found.");
+        }
         currMuscleLabel = new Label();
         currExerciseNameLabel = new Label();
         exerciseListView = new ListView<>();
@@ -368,6 +372,15 @@ public class WorkoutAppFX extends Application {
 
         stage.setTitle("Workout Tracker App");
         stage.setScene(calendarScene);
+
+        stage.setOnCloseRequest(e -> {
+            try {
+                manager.saveToFile("workouts.txt");
+            } catch (IOException ex) {
+                System.out.println("Save failed");
+            }
+        });
+
         stage.show();
     }
 

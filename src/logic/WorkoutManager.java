@@ -6,10 +6,12 @@ import model.SetEntry;
 import model.WorkoutDay;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class WorkoutManager {
     private HashMap<LocalDate, WorkoutDay> workoutDays;
@@ -55,4 +57,48 @@ public class WorkoutManager {
         }
         writer.close();
     }
-}
+
+    public void loadFromFile(String filename) throws IOException {
+        workoutDays.clear();
+        exerciseRecord.clear();
+
+        Scanner input = new Scanner(new File(filename));
+
+        WorkoutDay currDay = null;
+        MuscleGroup currMuscle = null;
+        Exercise currExercise = null;
+        SetEntry currSet = null;
+
+        while(input.hasNextLine()) {
+            String currLine = input.nextLine();
+            String[] parts = currLine.split("\\|");
+
+            switch(parts[0]) {
+                case "DAY":
+                    LocalDate date = LocalDate.parse(parts[1]);
+                    currDay = getWorkoutDay(date);
+                    break;
+
+                case "MUSCLE":
+                    currMuscle = new MuscleGroup(parts[1]);
+                    assert currDay != null;
+                    currDay.addMuscleGroup(currMuscle);
+                    break;
+
+                case "EXERCISE":
+                    currExercise = new Exercise(parts[1]);
+                    assert currMuscle != null;
+                    addExercise(currMuscle, currExercise);
+                    break;
+
+                case "SET":
+                    int reps = Integer.parseInt(parts[1]);
+                    double weight = Double.parseDouble(parts[2]);
+
+                    assert currExercise != null;
+                    currExercise.addSet(new SetEntry(reps, weight));
+                    break;
+            }
+            }
+        }
+    }
