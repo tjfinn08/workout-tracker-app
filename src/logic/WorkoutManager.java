@@ -11,15 +11,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class WorkoutManager {
-    private HashMap<LocalDate, WorkoutDay> workoutDays;
-    private HashMap<String, Exercise> exerciseRecord;
+    private final HashMap<LocalDate, WorkoutDay> workoutDays;
+    private final HashMap<String, TreeMap<LocalDate, Exercise>> exericseHistory;
 
     public WorkoutManager(){
         workoutDays = new HashMap<>();
-        exerciseRecord = new HashMap<>();
+        exericseHistory = new HashMap<>();
     }
 
     public WorkoutDay getWorkoutDay(LocalDate aDate) {
@@ -31,13 +33,30 @@ public class WorkoutManager {
         return workoutDays.get(aDate);
     }
 
-    public Exercise findMostRecent(String name) {
-        return exerciseRecord.get(name.toLowerCase());
+    public Exercise findMostRecent(String name, LocalDate currDate) {
+        TreeMap<LocalDate, Exercise> history = exericseHistory.get(name.toLowerCase());
+        if(history == null) {
+            return null;
+        }
+
+        Map.Entry<LocalDate, Exercise> previous = history.lowerEntry(currDate);
+        if(previous == null) {
+            return null;
+        }
+
+        return  previous.getValue();
     }
 
-    public void addExercise(MuscleGroup currMuscle, Exercise currExercise) {
-        currMuscle.addExercise(currExercise);
-        exerciseRecord.put(currExercise.getExerciseName().toLowerCase(), currExercise);
+    public void addExercise(LocalDate date, Exercise currExercise) {
+        String name = currExercise.getExerciseName().toLowerCase();
+
+        TreeMap<LocalDate, Exercise> history = exericseHistory.get(name);
+        if(history == null) {
+            history = new TreeMap<>();
+            exericseHistory.put(name, history);
+        }
+
+        history.put(date, currExercise);
     }
 
     public void saveToFile(String filename) throws IOException {
@@ -60,7 +79,7 @@ public class WorkoutManager {
 
     public void loadFromFile(String filename) throws IOException {
         workoutDays.clear();
-        exerciseRecord.clear();
+        exericseHistory.clear();
 
         Scanner input = new Scanner(new File(filename));
 
@@ -88,7 +107,7 @@ public class WorkoutManager {
                 case "EXERCISE":
                     currExercise = new Exercise(parts[1]);
                     assert currMuscle != null;
-                    addExercise(currMuscle, currExercise);
+                    addExercise(currDay.getDate(), currExercise);
                     break;
 
                 case "SET":

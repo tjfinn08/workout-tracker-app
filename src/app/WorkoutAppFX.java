@@ -77,7 +77,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return calendarScene;
-    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
+    }
 
     private Scene createWorkoutScene(Stage stage) {
         // WorkoutScene Breakdown
@@ -143,7 +143,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return workoutScene;
-    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
+    }
 
     private Scene createMuscleGroupScene(Stage stage) {
         // MuscleGroupScene Breakdown
@@ -210,7 +210,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return muscleGroupScene;
-    } //scene is pretty good, maybe just touch it up with CSS to make it look nicer
+    }
 
     private Scene createExerciseScene(Stage stage) {
         VBox exerciseLayout = new VBox(10);
@@ -229,21 +229,34 @@ public class WorkoutAppFX extends Application {
                 currExerciseNameLabel
         );
 
-        savedSetsToday = new VBox(10);
-
-        Label todaysSets = new Label();
-
-        if(currExercise.getExerciseSets().isEmpty()) {
-            todaysSets = new Label("No Sets Saved So Far Today");
+        Label oldSets;
+        if(manager.findMostRecent(currExercise.getExerciseName(), currDate.getDate()) == null) {
+            oldSets = new Label("No Previous Sets Saved");
         }
         else {
-            todaysSets = new Label(currExercise.exerciseSets());
+            oldSets = new Label(manager.findMostRecent(currExercise.getExerciseName(), currDate.getDate()).exerciseSets());
+        }
+        VBox previousSets = new VBox(10);
+        previousSets.getChildren().addAll(
+                new Label("----------MOST RECENT----------"),
+                oldSets,
+                new Label("------------------------------------------")
+        );
+
+
+        savedSetsToday = new VBox(10);
+        Label todaySets;
+        if(currExercise.getExerciseSets().isEmpty()) {
+            todaySets = new Label("No Sets Saved So Far Today");
+        }
+        else {
+            todaySets = new Label(currExercise.exerciseSets());
         }
 
         savedSetsToday.getChildren().addAll(
            new Label("----------TODAY----------"),
-           todaysSets,
-           new Label("----------------------------")
+           todaySets,
+           new Label("-------------------------------")
         );
 
         Button addSet = new Button("Add Set");
@@ -279,6 +292,7 @@ public class WorkoutAppFX extends Application {
                 set.setWeight(Double.parseDouble(weightField.getText()));
 
                 currExercise.addSet(set);
+                manager.addExercise(currDate.getDate(), currExercise);
 
                 refreshSetList();
             }
@@ -291,6 +305,7 @@ public class WorkoutAppFX extends Application {
 
         exerciseLayout.getChildren().addAll(
                 backArrowExercise,
+                previousSets,
                 savedSetsToday,
                 repsWeightText,
                 setRows,
@@ -307,7 +322,7 @@ public class WorkoutAppFX extends Application {
                 Objects.requireNonNull(getClass().getResource("/styles/style.css")).toExternalForm()
         );
         return exerciseScene;
-    } //only scene that still needs work, need to add "find most recent exercise" portion
+    }
 
     private HBox createSetRow() {
         HBox row = new HBox(10);

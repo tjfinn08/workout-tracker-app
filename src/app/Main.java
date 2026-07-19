@@ -51,7 +51,7 @@ public class Main {
 
                     System.out.print("What exercise? (Will be a blank where the user can type in the name of their exercise) ");
                     String userExercise = input.nextLine();
-                    Exercise previous = manager.findMostRecent(userExercise);
+                    Exercise previous = manager.findMostRecent(userExercise, date);
                     if (previous != null) {
                         System.out.println("Last Workout:");
                         System.out.println(previous);
@@ -75,7 +75,7 @@ public class Main {
                         currExercise.addSet(currSet);
                         input.nextLine();
                     }
-                    manager.addExercise(currMuscle, currExercise);
+                    manager.addExercise(date, currExercise);
                 }
                 userDay.addMuscleGroup(currMuscle);
 

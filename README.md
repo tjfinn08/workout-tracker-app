@@ -12,7 +12,8 @@ An application for tracking workouts, exercises and progress over time.
 In development
 
 ## Idea
-- Muscle Groups -> Exercise -> Sets
+- Manager → Day → Muscle Groups → Exercise → Sets
 
 ## Current Step
-Working on UI, currently on portion with sets, reps and weight
+Working on seeing previous workouts now. This is the last thing I need to add before adjusting CSS and finishing the 
+project
