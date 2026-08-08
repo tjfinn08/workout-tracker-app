@@ -50,3 +50,11 @@
     -fx-border-radius: 10;
     -fx-text-fill: white;
 }
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: "blue";
+    -fx-padding: 15;
+}

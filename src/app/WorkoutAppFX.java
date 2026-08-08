@@ -58,6 +58,7 @@ public class WorkoutAppFX extends Application {
 
         Label workoutCalendarLabel = new Label("Workout Calendar");
         workoutCalendarLabel.getStyleClass().add("title");
+        workoutCalendarLabel.getStyleClass().add("card");
 
         Label askCalendar = new Label("Please select the date of your workout:");
         askCalendar.getStyleClass().add("larger");
@@ -87,6 +88,7 @@ public class WorkoutAppFX extends Application {
         // WorkoutScene Control Breakdown
         Label workoutLabel = new Label("Workout Tracker");
         workoutLabel.getStyleClass().add("title");
+        workoutLabel.getStyleClass().add("card");
 
         TextField muscleGroupField = new TextField();
         muscleGroupField.setPromptText("Enter Workout");
@@ -150,6 +152,7 @@ public class WorkoutAppFX extends Application {
         VBox muscleGroupLayout = new VBox(10);
         muscleGroupLayout.setStyle("-fx-background-color: darkgray;");
         HBox backArrowMuscleGroup = new HBox(10);
+        backArrowMuscleGroup.getStyleClass().add("card");
 
         // MuscleGroupScene Control Breakdown
         TextField newExerciseField = new TextField();
@@ -218,6 +221,7 @@ public class WorkoutAppFX extends Application {
         setRows = new VBox(10);
         setRows.getChildren().add(createSetRow());
         HBox backArrowExercise = new HBox(10);
+        backArrowExercise.getStyleClass().add("card");
 
         currExerciseNameLabel.setText(currExercise.getExerciseName());
         Button backToMuscleGroupScene = new Button("<-");
