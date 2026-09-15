@@ -101,6 +101,16 @@ EXERCISE|Sam Sulek Forearms
 SET|0|85.0
 SET|0|85.0
 SET|0|85.0
+DAY|2026-08-24
+MUSCLE|Chest
+EXERCISE|Bench
+EXERCISE|Barbell Bench
+MUSCLE|Triceps
+EXERCISE|Ez Bar Pushdown
+MUSCLE|Shoulders
+EXERCISE|Dumbbell Shoulder Press
+SET|8|80.0
+SET|7|80.0
 DAY|2026-08-07
 DAY|2026-07-18
 MUSCLE|Legs
